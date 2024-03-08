@@ -13,7 +13,7 @@ public class BreakableWindow : MonoBehaviour {
     public int partsX = 0;
     [Range(0, 25)]
     public int partsY = 0;
-
+    public GameObject panelLose, buttL, buttR;
     [Space]
     public bool preCalculate = true;
     public bool addTorques = true;
@@ -245,9 +245,17 @@ public class BreakableWindow : MonoBehaviour {
                 {
                     health = 0;
                     breakWindow();
+                    buttL.SetActive(false); buttR.SetActive(false);
+                    StartCoroutine(Delays());
                 }
             }
-            else breakWindow();
+            else breakWindow(); buttL.SetActive(false); buttR.SetActive(false); StartCoroutine(Delays());
         }        
+    }
+    IEnumerator Delays()
+    {
+        yield return new WaitForSeconds(1f);
+        panelLose.SetActive(true);
+         
     }
 }
