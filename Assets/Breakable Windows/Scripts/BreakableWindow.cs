@@ -49,6 +49,7 @@ public class BreakableWindow : MonoBehaviour {
 
     void Start()
     {
+        
         if (preCalculate == true && allreadyCalculated == false)
         {
             bakeVertices();
@@ -236,21 +237,23 @@ public class BreakableWindow : MonoBehaviour {
 
     void OnCollisionEnter(Collision col)
     {
-        if (useCollision == true)
+      if(col.gameObject.CompareTag("Bot"))
         {
-            if (health > 0)
-            {
-                health -= col.impulse.magnitude;
-                if (health < 0)
-                {
-                    health = 0;
-                    breakWindow();
-                    buttL.SetActive(false); buttR.SetActive(false);
-                    StartCoroutine(Delays());
-                }
-            }
-            else breakWindow(); buttL.SetActive(false); buttR.SetActive(false); StartCoroutine(Delays());
-        }        
+
+            Debug.Log("bot lm vowx ");
+            breakWindow();
+
+        }
+      else if(col.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("ng lm vowx ");
+            breakWindow();
+            StartCoroutine(Delays());
+            panelLose.SetActive(true);
+            buttL.SetActive(false);
+            buttR.SetActive(false);
+        }
+            
     }
     IEnumerator Delays()
     {

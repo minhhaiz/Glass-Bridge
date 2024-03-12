@@ -15,15 +15,14 @@ public class Player : MonoBehaviour
 
     public Button buttonL, buttonR;
     private bool isPlayerAtTarget = false;
+    public GameObject panelwin, buttL, buttR;
     private void Awake()
     {
         tfrm=GetComponent<Transform>();
     }
     private void Update()
     {
-      
 
-       
        
     }
 
@@ -64,6 +63,21 @@ public class Player : MonoBehaviour
             index += 1;
         }
     }
-   
+    void OnCollisionEnter(Collision collision)
+    {
+        // Kiểm tra xem có va chạm với platform hay không
+        if (collision.gameObject.CompareTag("Target"))
+        {
+            Win();
+        }
+    }
+    void Win()
+    {
+        panelwin.SetActive(true);
+        buttL.SetActive(false);
+        buttR.SetActive(false);
+    }
+    
+
 }
 

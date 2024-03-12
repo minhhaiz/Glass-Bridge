@@ -4,12 +4,14 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Touch
+  - Target
+  - Glass
+  - Bot
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - player
   - Water
   - UI
   - 
