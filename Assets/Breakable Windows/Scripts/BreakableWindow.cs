@@ -242,6 +242,8 @@ public class BreakableWindow : MonoBehaviour {
 
             Debug.Log("bot lm vowx ");
             breakWindow();
+           
+            
 
         }
       else if(col.gameObject.CompareTag("Player"))

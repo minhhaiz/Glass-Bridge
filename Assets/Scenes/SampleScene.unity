@@ -728,6 +728,7 @@ MonoBehaviour:
   finishPl: {fileID: 1010110531}
   player: {fileID: 919132147625545345}
   breakableWindow: {fileID: 1511827769}
+  breckwin: []
 --- !u!1 &109873771
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,6 +967,61 @@ Transform:
   m_Children:
   - {fileID: 1731398486}
   m_Father: {fileID: 1213631051}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &228780416
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 228780418}
+  - component: {fileID: 228780417}
+  m_Layer: 0
+  m_Name: 'BotManager '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &228780417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228780416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427bc4614e6e64c479915cc9ce898e7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listDung: []
+  listSai: []
+  listBot:
+  - {fileID: 1263099391}
+  - {fileID: 843210635}
+  - {fileID: 1194872003}
+  - {fileID: 1680686572}
+  check: 0
+  direction: 0
+  currentIndex: 0
+  kiemtraNhayHet: 1
+--- !u!4 &228780418
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228780416}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &234354873
 GameObject:
@@ -3544,9 +3600,9 @@ MonoBehaviour:
   - {fileID: 4203725376666379}
   - {fileID: 1010110532}
   delaytime: 3
+  gameManager: {fileID: 0}
   rb: {fileID: 0}
   tfrmbot: {fileID: 843210634}
-  svBot: []
 --- !u!1 &849313900
 GameObject:
   m_ObjectHideFlags: 0
@@ -5518,9 +5574,9 @@ MonoBehaviour:
   - {fileID: 4203725376666379}
   - {fileID: 1010110532}
   delaytime: 4
+  gameManager: {fileID: 0}
   rb: {fileID: 0}
   tfrmbot: {fileID: 1194872001}
-  svBot: []
 --- !u!1 &1198076956
 GameObject:
   m_ObjectHideFlags: 0
@@ -5923,9 +5979,9 @@ MonoBehaviour:
   - {fileID: 4203725376666379}
   - {fileID: 1010110532}
   delaytime: 2
+  gameManager: {fileID: 0}
   rb: {fileID: 0}
   tfrmbot: {fileID: 1263099390}
-  svBot: []
 --- !u!1 &1280530500
 GameObject:
   m_ObjectHideFlags: 0
@@ -8201,9 +8257,9 @@ MonoBehaviour:
   - {fileID: 4203725376666379}
   - {fileID: 1010110532}
   delaytime: 5
+  gameManager: {fileID: 0}
   rb: {fileID: 0}
   tfrmbot: {fileID: 1680686571}
-  svBot: []
 --- !u!1 &1681139077
 GameObject:
   m_ObjectHideFlags: 0
@@ -14682,3 +14738,4 @@ SceneRoots:
   - {fileID: 1136067704}
   - {fileID: 543450651609877609}
   - {fileID: 874850781}
+  - {fileID: 228780418}

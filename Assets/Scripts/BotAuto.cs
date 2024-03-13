@@ -5,13 +5,17 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine.UIElements;
 using UnityEngine.PlayerLoop;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Linq;
 
-public class Bot : MonoBehaviour
+public class BotAuto : MonoBehaviour
 {
     
     [SerializeField] private List<Transform> posLeft;
     [SerializeField] private List<Transform> posRight;
     [SerializeField] public int delaytime;
+    [SerializeField] private GameManager gameManager;
+    Dictionary<int, bool> luuOdung = new Dictionary<int, bool>();
     public Rigidbody rb;
     
     public Transform tfrmbot;
@@ -23,30 +27,55 @@ public class Bot : MonoBehaviour
     private void Awake()
     {
         tfrmbot = GetComponent<Transform>();
-        jumpCoroutine = StartCoroutine(JumpRoutine());
+     //   jumpCoroutine = StartCoroutine(JumpRoutine());
        
     }
 
 
     Coroutine jumpCoroutine;
-    IEnumerator JumpRoutine()
-    {
-                yield return new WaitForSeconds(delaytime);
-                Jump();
-    }
+   
  
     private int index;
 
-    void Jump()
+    public void Jump()
     {
-       if(tfrmbot.position.y < 10)
+        index = BotManager.instance.currentIndex;
+        if (tfrmbot.position.y < 10)
         {
+            
             return;
+        }        
+        // int i = Random.Range(0, 2);
+        int i = 0;
+        i=Random.Range(0, 2);
+        //gameManager.breckwin[]
+        //i == 0 L i== 1 R
+        if (BotManager.instance.check)
+        {
+            i = BotManager.instance.direction;
         }
+        else
+        {
+            if (!BotManager.instance.listSai.Contains(posLeft[index].name))
+            {
+                
+               
+                BotManager.instance.check = true;
+                BotManager.instance.direction = 0;
+                luuOdung.Add(index, true);
+            }
+            
+            if (!BotManager.instance.listSai.Contains(posRight[index].name))
+            {
 
-        int i = Random.Range(0, 2);
 
-        //i==0 L i==1 R
+                luuOdung.Add(index, true);
+                BotManager.instance.check = true;
+                BotManager.instance.direction = 1;
+            }
+               
+
+        }
         if (isPlayerAtTarget == false)
         {
             
@@ -67,10 +96,10 @@ public class Bot : MonoBehaviour
                     isPlayerAtTarget = false;
                 });
             }
-            index += 1;
-            StopCoroutine(jumpCoroutine);
+            
+      
             isPlayerAtTarget = true;
-            jumpCoroutine = StartCoroutine(JumpRoutine());
+          //  jumpCoroutine = StartCoroutine(JumpRoutine());
         }
        
     }

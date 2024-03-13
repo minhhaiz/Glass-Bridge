@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject panelwin, panellose, buttL, buttR, finishPl, player;
     public BreakableWindow breakableWindow = new BreakableWindow();
     Color redColor = Color.red;
-    List<GameObject> breckwin = new List<GameObject>();
+    public List<GameObject> breckwin = new List<GameObject>();
     Dictionary<Renderer, Color> initialColor = new Dictionary<Renderer, Color>();
     void Start()
     {
@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
                 window1[inRan].GetComponent<BreakableWindow>().buttR = breakableWindow.buttR;
                 window1[inRan].GetComponent<BreakableWindow>().breakingSound = breakableWindow.breakingSound;
                 breckwin.Add(window1[inRan]);
+                BotManager.instance.listSai.Add(window1[inRan].name);
 
             }
             if (i == 1)
@@ -52,6 +53,7 @@ public class GameManager : MonoBehaviour
                 window2[inRan].GetComponent<BreakableWindow>().buttR = breakableWindow.buttR;
                 window2[inRan].GetComponent<BreakableWindow>().breakingSound = breakableWindow.breakingSound;
                 breckwin.Add(window2[inRan]);
+                BotManager.instance.listSai.Add(window2[inRan].name);
 
             }
             if (i == 2)
@@ -62,6 +64,7 @@ public class GameManager : MonoBehaviour
                 window3[inRan].GetComponent<BreakableWindow>().buttR = breakableWindow.buttR;
                 window3[inRan].GetComponent<BreakableWindow>().breakingSound = breakableWindow.breakingSound;
                 breckwin.Add(window3[inRan]);
+                BotManager.instance.listSai.Add(window3[inRan].name);
             }
             if (i == 3)
             {
@@ -71,6 +74,7 @@ public class GameManager : MonoBehaviour
                 window4[inRan].GetComponent<BreakableWindow>().buttR = breakableWindow.buttR;
                 window4[inRan].GetComponent<BreakableWindow>().breakingSound = breakableWindow.breakingSound;
                 breckwin.Add(window4[inRan]);
+                BotManager.instance.listSai.Add(window4[inRan].name);
             }
             if (i == 4)
             {
@@ -80,6 +84,7 @@ public class GameManager : MonoBehaviour
                 window5[inRan].GetComponent<BreakableWindow>().buttR = breakableWindow.buttR;
                 window5[inRan].GetComponent<BreakableWindow>().breakingSound = breakableWindow.breakingSound;
                 breckwin.Add(window5[inRan]);
+                BotManager.instance.listSai.Add(window5[inRan].name);
             }
             if (i == 5)
             {
@@ -89,6 +94,7 @@ public class GameManager : MonoBehaviour
                 window6[inRan].GetComponent<BreakableWindow>().buttR = breakableWindow.buttR;
                 window6[inRan].GetComponent<BreakableWindow>().breakingSound = breakableWindow.breakingSound;
                 breckwin.Add(window6[inRan]);
+                BotManager.instance.listSai.Add(window6[inRan].name);
             }
             if (i == 6)
             {
@@ -98,6 +104,7 @@ public class GameManager : MonoBehaviour
                 window7[inRan].GetComponent<BreakableWindow>().buttR = breakableWindow.buttR;
                 window7[inRan].GetComponent<BreakableWindow>().breakingSound = breakableWindow.breakingSound;
                 breckwin.Add(window7[inRan]);
+                BotManager.instance.listSai.Add(window7[inRan].name);
             }
 
         }
