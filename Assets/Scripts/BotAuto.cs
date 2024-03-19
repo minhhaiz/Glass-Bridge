@@ -10,44 +10,83 @@ using System.Linq;
 
 public class BotAuto : MonoBehaviour
 {
-    
     [SerializeField] private List<Transform> posLeft;
     [SerializeField] private List<Transform> posRight;
-    [SerializeField] public int delaytime;
-    [SerializeField] private GameManager gameManager;
+
     Dictionary<int, bool> luuOdung = new Dictionary<int, bool>();
     public Rigidbody rb;
     
     public Transform tfrmbot;
 
  
-    public Button buttonL, buttonR;
+  
     private bool isPlayerAtTarget = false;
 
     private void Awake()
     {
         tfrmbot = GetComponent<Transform>();
-     //   jumpCoroutine = StartCoroutine(JumpRoutine());
-       
+        StartCoroutine(Run());
     }
-
 
     Coroutine jumpCoroutine;
    
- 
+    IEnumerator Run()
+    {
+        
+        yield return new WaitForSeconds(15f);
+        for (int i = 0; i < posLeft.Count; i++) 
+        {
+            Jump();
+            yield return new WaitForSeconds(2f);
+        }
+     
+    }
     private int index;
 
     public void Jump()
     {
-        index = BotManager.instance.currentIndex;
-        if (tfrmbot.position.y < 10)
+        if (tfrmbot.position.y < 19)
         {
-            
+            return;
+        }
+        //i==0 L i==1 R
+        int i = Random.Range(0, 2);
+        if (isPlayerAtTarget == false)
+        {
+            isPlayerAtTarget = true;
+            if (i == 0)
+            {
+              
+                tfrmbot.DOMove(posLeft[index].position, 0.3f).OnComplete(() =>
+                {
+                    isPlayerAtTarget = false;
+
+
+                });
+
+            }
+            else
+            {
+             
+
+                tfrmbot.DOMove(posRight[index].position, 0.3f).OnComplete(() =>
+                {
+                    isPlayerAtTarget = false;
+                });
+            }
+            index++;
+        }
+    }
+    /*public void Jump()
+    {
+        index = BotManager.instance.currentIndex;
+        if (tfrmbot.position.y < 19)
+        {
             return;
         }        
         // int i = Random.Range(0, 2);
         int i = 0;
-        i=Random.Range(0, 2);
+        i = Random.Range(0, 2);
         //gameManager.breckwin[]
         //i == 0 L i== 1 R
         if (BotManager.instance.check)
@@ -82,32 +121,42 @@ public class BotAuto : MonoBehaviour
             if (i == 0)
             {
 
-                tfrmbot.DOMove(posLeft[index].position, 0.3f).OnComplete(() =>
+                Vector3[] path = new Vector3[]
+                {
+                 tfrmbot.position,
+            new Vector3(posLeft[index].position.x + 2f , transform.position.y + 1f, posLeft[index].position.z ), // ?i?m cao nh?t c?a nh?y
+                    posLeft[index].transform.position
+                 };
+
+                tfrmbot.DOPath(path, 0.3f, PathType.CatmullRom).SetEase(Ease.Linear).OnComplete(() =>
                 {
                     isPlayerAtTarget = false;
-                });
+                }); ;
 
             }
             else
             {
 
-                tfrmbot.DOMove(posRight[index].position, 0.3f).OnComplete(() =>
+                Vector3[] path = new Vector3[]
+            {
+                 tfrmbot.position,
+            new Vector3(posRight[index].position.x + 2f , transform.position.y + 1f, posRight[index].position.z ), // ?i?m cao nh?t c?a nh?y
+                    posRight[index].transform.position
+               };
+
+                tfrmbot.DOPath(path, 0.3f, PathType.CatmullRom).SetEase(Ease.Linear).OnComplete(() =>
                 {
                     isPlayerAtTarget = false;
-                });
+                }); ;
             }
             
       
             isPlayerAtTarget = true;
-          //  jumpCoroutine = StartCoroutine(JumpRoutine());
+          
         }
        
-    }
-    IEnumerator ResetJump()
-    {
-        yield return new WaitForSeconds(1f);
-        isPlayerAtTarget = false;
-    }
+    }*/
+
 
 
 }

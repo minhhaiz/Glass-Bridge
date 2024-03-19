@@ -16,9 +16,14 @@ public class Respawn : MonoBehaviour
         //player.transform.position = respawnPoint.transform.position;
 
         //Debug.LogWarning(countDies + " deaths");
-       // botlist[0].SetActive(false);
+        // botlist[0].SetActive(false);
         //lose.SetActive(true);
 
+        if (other.gameObject.CompareTag("Player"))
+        {
+            lose.SetActive(true);
+        }
     }
+
 
 }

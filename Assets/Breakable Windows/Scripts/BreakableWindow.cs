@@ -246,12 +246,13 @@ public class BreakableWindow : MonoBehaviour {
             
 
         }
-      else if(col.gameObject.CompareTag("Player"))
+      else if(col.gameObject.CompareTag("Player") )
         {
             Debug.Log("ng lm vowx ");
             breakWindow();
+            
             StartCoroutine(Delays());
-            panelLose.SetActive(true);
+           
             buttL.SetActive(false);
             buttR.SetActive(false);
         }
@@ -259,7 +260,7 @@ public class BreakableWindow : MonoBehaviour {
     }
     IEnumerator Delays()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         panelLose.SetActive(true);
          
     }

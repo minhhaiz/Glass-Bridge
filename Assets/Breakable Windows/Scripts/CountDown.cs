@@ -7,7 +7,9 @@ using UnityEngine.SceneManagement;
 public class CountDown : Respawn
 {
     float currentTime = 0f;
-    float startingTime = 120f;
+    float startingTime = 90f;
+    private Animation animation;
+    
 
     [SerializeField] Text countdownText;
     [SerializeField] Text deathsText;
@@ -16,6 +18,7 @@ public class CountDown : Respawn
     void Start()
     {
         currentTime = startingTime;
+        animation = GetComponent<Animation>();
     }
 
     // Update is called once per frame
@@ -23,11 +26,13 @@ public class CountDown : Respawn
     {
         currentTime -= 1 * Time.deltaTime;
         countdownText.text = currentTime.ToString("0s");
-
+        
         if (currentTime <= 0)
         {
             currentTime = 0;
-            SceneManager.LoadScene("SampleScene");
+         
+            lose.SetActive(true);
+           // SceneManager.LoadScene("SampleScene");
         }
 
        // deathsText.text = countDies.ToString("");
