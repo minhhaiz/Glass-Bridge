@@ -13,7 +13,7 @@ public class BreakableWindow : MonoBehaviour {
     public int partsX = 0;
     [Range(0, 25)]
     public int partsY = 0;
-    public GameObject panelLose, buttL, buttR;
+    public GameObject panelLose, buttL, buttR ;
     [Space]
     public bool preCalculate = true;
     public bool addTorques = true;
@@ -31,7 +31,7 @@ public class BreakableWindow : MonoBehaviour {
     [Space]
     [Tooltip("Seconds after window is broken that splinters have to be destroyed.")]
     public float destroySplintersTime = 1;
-
+   
     [Space]
     public AudioClip breakingSound;
 
@@ -58,7 +58,9 @@ public class BreakableWindow : MonoBehaviour {
         }
 
         if (transform.rotation.eulerAngles.x != 0 || transform.rotation.eulerAngles.z != 0)
-            Debug.LogWarning("Warning: Window must not be rotated around x and z!");
+        {
+
+        }
     }
 
     private void bakeVertices(bool trianglesToo = false)
@@ -255,12 +257,13 @@ public class BreakableWindow : MonoBehaviour {
            
             buttL.SetActive(false);
             buttR.SetActive(false);
+            CountDown.isWin = true;
         }
             
     }
     IEnumerator Delays()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
         panelLose.SetActive(true);
          
     }

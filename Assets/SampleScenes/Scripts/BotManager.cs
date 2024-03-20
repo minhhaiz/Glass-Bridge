@@ -81,7 +81,7 @@ public class BotManager : MonoBehaviour
     {
         //StartCoroutine(IJump());
         //StartCoroutine(TesBot());
-        DOVirtual.DelayedCall(2f, RandomOrder);
+        DOVirtual.DelayedCall(3f, RandomOrder);
     }
     /*[Header("Bien chung")]
     public bool check = false;

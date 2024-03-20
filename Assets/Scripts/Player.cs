@@ -11,12 +11,14 @@ public class Player : MonoBehaviour
 {
 
     public Rigidbody rb;
+    public static int coin;
     public float jumpForce = 15f;
     public Transform tfrm;
 
     public Button buttonL, buttonR;
     private bool isPlayerAtTarget = false;
-    public GameObject panelwin, buttL, buttR;
+    public GameObject panelwin, buttL, buttR, pause;
+    public UIGameEnd uIGameEnd;
     private void Awake()
     {
         index = 0;
@@ -100,9 +102,9 @@ public class Player : MonoBehaviour
     }
     void Win()
     {
-        panelwin.SetActive(true);
-        buttL.SetActive(false);
-        buttR.SetActive(false);
+        CountDown.isWin = true;
+        uIGameEnd.ShowPanel(true);
+        pause.SetActive(false);
     }
     
 

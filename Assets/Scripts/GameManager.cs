@@ -1,19 +1,22 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
 
     public List<GameObject> window1, window2, window3, window4, window5, window6, window7;
-    public GameObject panelwin, panellose, buttL, buttR, finishPl, player, cam, panelPause, LV,TimeCount;
+    public GameObject panelwin, panellose, buttL, buttR, finishPl, player, cam, panelPause, LV,TimeCount,Coins, butpause;
     public BreakableWindow breakableWindow = new BreakableWindow();
     Color redColor = Color.red;
     public List<GameObject> breckwin = new List<GameObject>();
     Dictionary<Renderer, Color> initialColor = new Dictionary<Renderer, Color>();
     public static bool[] listGlass = new bool[7];
+    public static bool isStart;
 
     private void Awake()
     {
@@ -22,7 +25,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-     
+        isStart = false;
     }
     void StartGame()
     {
@@ -39,9 +42,9 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        if (player.transform.position == finishPl.transform.position)
+      if(player.transform.position.y < 19)
         {
-            Win();
+            butpause.SetActive(false);
         }
     }
 
@@ -142,13 +145,16 @@ public class GameManager : MonoBehaviour
             }
         }
         StartCoroutine(BlinkBreckGlass());
-
+        DOVirtual.DelayedCall(4.2f, delegate
+        {
+            isStart = true;
+            Debug.Log("asdyuatsdyuastdyuastdyuastdyastudytasudt " + isStart);
+        });
     }
 
 
     IEnumerator BlinkBreckGlass()
     {
-
         float timeElapsed = 0f;
         while (timeElapsed < 1f)
         {
@@ -179,26 +185,22 @@ public class GameManager : MonoBehaviour
                 
             }
         }
+        
          // buttL.SetActive(true);
+
+
+
          // buttR.SetActive(true);
     }
-    void Win()
-    {
-    
-        panelwin.SetActive(true);
-        buttL.SetActive(false);
-        buttR.SetActive(false);
-        TimeCount.SetActive(false);
-        
-
-    }
+   
     public void Restart()
     {
         SceneManager.LoadScene("SampleScene");
     }
     public void Pause()
     {
-        Time.timeScale = 0f;
+        CountDown.isWin = true;
+        Coins.SetActive(false);
         panelPause.SetActive(true);
         panellose.SetActive(false);
         panelwin.SetActive(false);
@@ -211,18 +213,25 @@ public class GameManager : MonoBehaviour
     }
     public void Resume()
     {
-
+        Coins.SetActive(true);
+        CountDown.isWin = false;
         Time.timeScale = 1f;
         panelPause.SetActive(false);
         panellose.SetActive(false);
         panelwin.SetActive(false);
         TimeCount.SetActive(true);
-        buttL.SetActive(true);
-        buttR.SetActive(true);
+        DOTween.PlayAll();
+        //buttL.SetActive(true);
+        //buttR.SetActive(true);
 
     }
     public void Home()
     {
         SceneManager.LoadScene("Menu");
+    }
+
+    private void OnDestroy()
+    {
+        DOTween.KillAll();
     }
 }

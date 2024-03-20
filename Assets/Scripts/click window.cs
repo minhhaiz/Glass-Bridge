@@ -14,7 +14,7 @@ public class PathPointClickHandler : MonoBehaviour
 
        /* Debug.LogError(int.Parse(gameObject.tag));
         Debug.LogError("index player " + Player.index);*/
-            if (Player.index + 1 == int.Parse(gameObject.tag) && canClick)
+            if (Player.index + 1 == int.Parse(gameObject.tag) && canClick && GameManager.isStart == true && CountDown.isWin == false)
             {
                 Player playerMoveScript = FindObjectOfType<Player>();
                 if (playerMoveScript != null)

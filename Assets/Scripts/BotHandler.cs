@@ -18,7 +18,7 @@ public class BotHandler : MonoBehaviour
     {
         Debug.Log("qweeqweqwe " + indexGlass);
 
-        float duration = Random.Range(1, 2.5f);
+        float duration = Random.Range(1.5f, 2f);
         DOVirtual.DelayedCall(duration, () =>
         {
             if (indexGlass == 7)
@@ -29,7 +29,7 @@ public class BotHandler : MonoBehaviour
                     transform.GetComponent<Animator>().SetBool("isWin", true);
                 });
             }
-            if (indexGlass < indexLimit)
+            else if (indexGlass < indexLimit)
             {
                 if (GameManager.listGlass[indexGlass] == true)
                 {

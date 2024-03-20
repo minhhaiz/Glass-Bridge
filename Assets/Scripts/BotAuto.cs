@@ -33,7 +33,7 @@ public class BotAuto : MonoBehaviour
     IEnumerator Run()
     {
         
-        yield return new WaitForSeconds(15f);
+        yield return new WaitForSeconds(20f);
         for (int i = 0; i < posLeft.Count; i++) 
         {
             Jump();
