@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class CountDown : Respawn
 {
     float currentTime = 0f;
-    float startingTime = 90f;
+    public float startingTime = 90f;
     private Animation animation;
     public static bool isWin;
     public GameObject pause;
@@ -17,7 +17,7 @@ public class CountDown : Respawn
     // Start is called before the first frame update
     void Start()
     {
-        isWin = false;
+       
         currentTime = startingTime;
         animation = GetComponent<Animation>();
     }
@@ -37,11 +37,10 @@ public class CountDown : Respawn
                 lose.SetActive(true);
                 pause.SetActive(false);
 
-                // SceneManager.LoadScene("SampleScene");
             }
            
 
-            // deathsText.text = countDies.ToString("");
+
         }
 
 

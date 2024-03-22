@@ -12,9 +12,10 @@ public class PathPointClickHandler : MonoBehaviour
     void OnMouseDown()
     {
 
-       /* Debug.LogError(int.Parse(gameObject.tag));
+        /*Debug.LogError("is start"+ GameManager.isStart.ToString());
+        Debug.LogError("is win"+ CountDown.isWin.ToString());
         Debug.LogError("index player " + Player.index);*/
-            if (Player.index + 1 == int.Parse(gameObject.tag) && canClick && GameManager.isStart == true && CountDown.isWin == false)
+        if (Player.index + 1 == int.Parse(gameObject.tag) && canClick && GameManager.isStart == true && CountDown.isWin == false)
             {
                 Player playerMoveScript = FindObjectOfType<Player>();
                 if (playerMoveScript != null)

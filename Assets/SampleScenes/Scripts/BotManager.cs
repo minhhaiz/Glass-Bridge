@@ -21,7 +21,7 @@ public class BotManager : MonoBehaviour
     int indexLimit;
     float time;
 
-    void RandomOrder()
+   public void RandomOrder()
     {
         while (listBot.Count != 0)
         {
@@ -81,7 +81,7 @@ public class BotManager : MonoBehaviour
     {
         //StartCoroutine(IJump());
         //StartCoroutine(TesBot());
-        DOVirtual.DelayedCall(3f, RandomOrder);
+       // DOVirtual.DelayedCall(6f, RandomOrder);
     }
     /*[Header("Bien chung")]
     public bool check = false;

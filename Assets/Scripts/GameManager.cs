@@ -10,24 +10,47 @@ public class GameManager : MonoBehaviour
 {
 
     public List<GameObject> window1, window2, window3, window4, window5, window6, window7;
-    public GameObject panelwin, panellose, buttL, buttR, finishPl, player, cam, panelPause, LV,TimeCount,Coins, butpause;
+    public GameObject panelwin, panellose, buttL, buttR, finishPl, player, cam, panelPause, LV,TimeCount,Coins, butpause, drone;
     public BreakableWindow breakableWindow = new BreakableWindow();
     Color redColor = Color.red;
     public List<GameObject> breckwin = new List<GameObject>();
+    BotManager bot;
     Dictionary<Renderer, Color> initialColor = new Dictionary<Renderer, Color>();
     public static bool[] listGlass = new bool[7];
     public static bool isStart;
+    public bool nhay = false;
 
     private void Awake()
     {
         Application.targetFrameRate = 120;
-        StartGame();
+        TimeCount.SetActive(false);
+       //StartGame();
     }
     void Start()
     {
         isStart = false;
     }
-    void StartGame()
+    public void StartGame()
+    {
+        cam.transform.DOMoveX(25, 2f);
+        cam.transform.DORotate(new Vector3(40, -90, 0), 2f);
+        cam.GetComponent<Camera>().DOOrthoSize(10, 2f).OnComplete(() =>
+        {
+            CreateGlass();
+            if (bot == null)
+            {
+                bot = GameObject.FindObjectOfType<BotManager>();
+            }
+            bot.RandomOrder();
+
+            CountDown.isWin = false;
+            TimeCount.SetActive(true);
+        }
+        );
+       
+
+    }
+    public void StartGameForcan()
     {
         cam.transform.DOMoveX(25, 2f);
         cam.transform.DORotate(new Vector3(40, -90, 0), 2f);
@@ -35,6 +58,13 @@ public class GameManager : MonoBehaviour
         {
             CreateGlass();
             luuColor();
+            CountDown.isWin = false;
+            TimeCount.SetActive(true);
+            if (bot == null)
+            {
+                bot = GameObject.FindObjectOfType<BotManager>();
+            }
+            bot.RandomOrder();
         }
         );
 
@@ -131,7 +161,7 @@ public class GameManager : MonoBehaviour
         BotManager.instance.listSai.Add(finishPl.name);
     }
     // Update is called once per frame
-    void luuColor()
+    public void luuColor()
     {
         foreach (GameObject obj in breckwin)
         {
@@ -155,6 +185,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator BlinkBreckGlass()
     {
+        yield return new WaitForSeconds(1f);
         float timeElapsed = 0f;
         while (timeElapsed < 1f)
         {
@@ -234,4 +265,90 @@ public class GameManager : MonoBehaviour
     {
         DOTween.KillAll();
     }
+
+
+     IEnumerator RadarBlink()
+    {
+        foreach (GameObject obj in breckwin)
+        {
+            if (obj != null)
+            {
+                MeshRenderer renderer = obj.GetComponent<MeshRenderer>();
+                if (renderer != null)
+                {
+                    initialColor[renderer] = renderer.material.color;
+                }
+            }
+        }
+        float timeElapsed = 0f;
+        while (timeElapsed < 1f)
+        {
+            foreach (GameObject obj in breckwin)
+            {
+                if (obj != null)
+                {
+                    Renderer renderer = obj.GetComponent<Renderer>();
+
+                    renderer.material.color = (renderer.material.color == redColor) ? initialColor[renderer] : redColor;
+
+                }
+            }
+             yield return new WaitForSeconds(3f);
+            timeElapsed += 1f;
+        }
+        foreach (GameObject obj in breckwin)
+        {
+            if (obj != null)
+            {
+                Renderer renderer = obj.GetComponent<Renderer>();
+
+                renderer.material.color = initialColor[renderer];
+             
+
+            }
+        }
+        isStart = true;
+
+    }
+    public void Radar()
+    {
+        StartCoroutine(RadarBlink());
+    }
+
+
+    IEnumerator RunDrone()
+    {
+        /*float timeElapsed = 0f;
+        while (timeElapsed < 1f)
+        {
+            foreach (GameObject obj in breckwin)
+            {
+                if (obj != null)
+                {
+                    Renderer renderer = obj.GetComponent<Renderer>();
+                    drone.transform.DOMove(new Vector3(obj.transform.position.x, obj.transform.position.y + 0.5f, obj.transform.position.z), 0.3f);
+                    yield return new WaitForSeconds(0.5f);
+                    // renderer.material.color = (renderer.material.color == redColor) ? initialColor[renderer] : redColor;
+                    obj.SetActive(false);
+                    yield return new WaitForSeconds(0.5f);
+                }
+            }
+            yield return new WaitForSeconds(1f);
+            drone.transform.DOMove(new Vector3(0, 40f, 0), 1f);
+            timeElapsed += 1f;
+        }*/
+        yield return new WaitForSeconds(2f);
+        int randombreck = Random.Range(3, 7);
+        Transform hi = breckwin[randombreck].transform;
+        drone.transform.DOMove(hi.position, 1f);
+        yield return new WaitForSeconds(1f);
+        breckwin[randombreck].SetActive(false);
+        drone.transform.DOMove(new Vector3(0, 40f, 0), 1f);
+    }
+
+    public void Drone()
+    {
+        StartCoroutine(RunDrone());
+    }
+
 }

@@ -10,13 +10,13 @@ public class BotHandler : MonoBehaviour
     public Transform Dichk;
     public void Play(int indexLimit)
     {
-        Debug.Log(gameObject + " limit " +  indexLimit);
+        
         Jump(indexLimit);
     }
 
     void Jump(int indexLimit)
     {
-        Debug.Log("qweeqweqwe " + indexGlass);
+     
 
         float duration = Random.Range(1.5f, 2f);
         DOVirtual.DelayedCall(duration, () =>
