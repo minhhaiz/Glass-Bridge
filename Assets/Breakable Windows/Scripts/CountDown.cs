@@ -9,6 +9,7 @@ public class CountDown : Respawn
     float currentTime = 0f;
     public float startingTime = 90f;
     private Animation animation;
+    public GameObject btnItem;
     public static bool isWin;
     public GameObject pause;
     [SerializeField] Text countdownText;
@@ -36,6 +37,7 @@ public class CountDown : Respawn
 
                 lose.SetActive(true);
                 pause.SetActive(false);
+                btnItem.SetActive(false);
 
             }
            

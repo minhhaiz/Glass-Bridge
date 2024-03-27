@@ -13,7 +13,7 @@ public class BreakableWindow : MonoBehaviour {
     public int partsX = 0;
     [Range(0, 25)]
     public int partsY = 0;
-    public GameObject panelLose, buttL, buttR ;
+    public GameObject panelLose, buttL, buttR ,BtnItem;
     [Space]
     public bool preCalculate = true;
     public bool addTorques = true;
@@ -243,28 +243,35 @@ public class BreakableWindow : MonoBehaviour {
         {
 
             Debug.Log("bot lm vowx ");
-            breakWindow();
            
-            
+            breakWindow();
+
+            GameManager gameManager = FindObjectOfType<GameManager>();
+            gameManager.RemoveGlass(gameObject);
 
         }
       else if(col.gameObject.CompareTag("Player") )
         {
             Debug.Log("ng lm vowx ");
+           
             breakWindow();
-            
+            GameManager gameManager = FindObjectOfType<GameManager>();
+            gameManager.RemoveGlass(gameObject);
             StartCoroutine(Delays());
            
             buttL.SetActive(false);
             buttR.SetActive(false);
+            
             CountDown.isWin = true;
         }
             
     }
     IEnumerator Delays()
     {
-        yield return new WaitForSeconds(1f);
-        panelLose.SetActive(true);
+        //yield return new WaitForSeconds(1f);
+        yield return null;
+       // panelLose.SetActive(true);
+      
          
     }
 }

@@ -3,7 +3,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
@@ -17,57 +20,69 @@ public class BotManager : MonoBehaviour
     public List<string> listSai = new List<string>();
     List<GameObject> listBotRandom = new List<GameObject>();
     public List<GameObject> listBot;
+    public GameObject player;
     public Transform tfrmbot;
-    int indexLimit;
+    int indexLimit, index;
+    public Text yourTurrn;
     float time;
+    public TextMeshProUGUI tb;
 
    public void RandomOrder()
     {
+        tb.gameObject.SetActive(false);
         while (listBot.Count != 0)
         {
             int random = Random.Range(0, listBot.Count);
+            Debug.Log("random" + random);
             listBotRandom.Add(listBot[random]);
             listBot.RemoveAt(random);
+        }
+        GameManager.isStart = false;
+        for (int i = 0; i < listBotRandom.Count; i++)
+        {
+            Debug.LogError(listBotRandom[i]);
+            if (listBotRandom[i] == player)
+            {
+                yourTurrn.gameObject.SetActive(true);
+                yourTurrn.text = "YourTurn : " + (i+1).ToString();
+            }
         }
         StartGame();
     }
 
+    public void NextTurn()
+    {
+        Debug.Log("ashjdgashjdgashjdgahsdahjsd");
+        if(listBotRandom.Count != 0)
+        {
+            if (listBotRandom[index].name == player.name)
+            {
+                
+                DOVirtual.DelayedCall(2f, delegate
+                {
+                    GameManager.isStart = true;
+                    index++;
+                    MoveText();
+                });
+            }
+            else
+            {
+
+                int randomLimit = Random.Range(1, 3);
+                indexLimit += randomLimit;
+                DOVirtual.DelayedCall(2, () =>
+                {
+                    listBotRandom[index].GetComponent<BotHandler>().Play(indexLimit);
+                    index++;
+                    NextTurn();
+                });
+            }
+        }
+    }
+
     void StartGame()
     {
-        float time = Random.Range(3, 4);
-        int randomLimit = Random.Range(1, 4);
-        indexLimit += randomLimit;
-        DOVirtual.DelayedCall(time, () =>
-        {
-            listBotRandom[0].GetComponent<BotHandler>().Play(indexLimit);
-        }).OnComplete(() =>
-        {
-            time = Random.Range(2, 5);
-            randomLimit = Random.Range(1, 4);
-            indexLimit += randomLimit;
-            DOVirtual.DelayedCall(time, () =>
-            {
-                listBotRandom[1].GetComponent<BotHandler>().Play(indexLimit);
-            }).OnComplete(() =>
-            {
-                time = Random.Range(2, 5);
-                randomLimit = Random.Range(1, 4);
-                indexLimit += randomLimit;
-                DOVirtual.DelayedCall(time, () =>
-                {
-                    listBotRandom[2].GetComponent<BotHandler>().Play(indexLimit);
-                }).OnComplete(() =>
-                {
-                    time = Random.Range(2, 5);
-                    randomLimit = Random.Range(1, 4);
-                    indexLimit += randomLimit;
-                    DOVirtual.DelayedCall(time, () =>
-                    {
-                        listBotRandom[3].GetComponent<BotHandler>().Play(indexLimit);
-                    });
-                });
-            });
-        });
+        NextTurn();
     }
 
     private void Awake()
@@ -83,60 +98,23 @@ public class BotManager : MonoBehaviour
         //StartCoroutine(TesBot());
        // DOVirtual.DelayedCall(6f, RandomOrder);
     }
-    /*[Header("Bien chung")]
-    public bool check = false;
-    public int direction = 0;
-    public int currentIndex = 0;
-    public bool kiemtraNhayHet = true;
-    //Nhay lan luot tung o
-    IEnumerator IQLBot()
+    
+    void MoveText()
     {
+        tb.gameObject.SetActive(true);
+        // Vector3 oldPosition = tb.rectTransform.position;
+        //Vector3 newPosition = new Vector3(oldPosition.x + 00f, oldPosition.y , oldPosition.z);
 
-        check = false;
-        kiemtraNhayHet = false;
-        float timedelay = 0.5f;
-        for (int i = 0; i < listBot.Count; i++)
-        {
-            yield return new WaitForSeconds(timedelay);
-            listBot[i].Jump();
-
-        }
-        yield return null;
-        kiemtraNhayHet = true;
-        currentIndex++;
+        // tb.rectTransform.DOMoveX(newPosition.x, 1f).SetEase(Ease.Linear).OnComplete(RetractText);
+        StartCoroutine(RetractText());
     }
-    IEnumerator TesBot()
+    IEnumerator RetractText()
     {
-        yield return new WaitForSeconds(4f);
-        while (currentIndex < listSai.Count)
-        {
-            check = false;
-            //kiemtraNhayHet = false;
-            float timedelay = 0.5f;
-            for (int i = 0; i < listBot.Count; i++)
-            {
-                yield return new WaitForSeconds(timedelay);
-                listBot[i].Jump();
+        //Vector3 oldPosition = tb.rectTransform.position;
 
-            }
-            yield return null;
-            kiemtraNhayHet = true;
-            currentIndex++;
-        }
+        //tb.rectTransform.DOMoveX(oldPosition.x, 1f).SetEase(Ease.Linear);
+        yield return new WaitForSeconds(1f);
+
+        tb.gameObject.SetActive(false);
     }
-
-    IEnumerator IJump()
-    {
-        yield return new WaitForSeconds(4f);
-        while (currentIndex < listSai.Count)
-        {
-            if (kiemtraNhayHet == true)
-            {
-                StartCoroutine(IQLBot());
-
-            }
-            yield return null;
-        }
-        yield return null;
-    }*/
 }
