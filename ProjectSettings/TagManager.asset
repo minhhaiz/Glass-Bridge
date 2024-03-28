@@ -17,6 +17,8 @@ TagManager:
   - 6
   - 7
   - 8
+  - floor
+  - Bots
   layers:
   - Default
   - TransparentFX

@@ -2,7 +2,9 @@ using DG.Tweening;
 using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static DG.DemiLib.DeToggleColors;
 
@@ -12,6 +14,9 @@ public class Test : MonoBehaviour
     public List<GameObject> floors;
     public List<GameObject> floorsColor;
     public List<GameObject> cubes;
+    public static int coin;
+    public UIGameEnd uIGameEnd;
+
     private List<Renderer> cellRenderers = new List<Renderer>();
     public GameObject windows;
     public List<Color> colors = new List<Color>();
@@ -19,6 +24,7 @@ public class Test : MonoBehaviour
     public Dictionary<GameObject, Color> floorsColorDic = new Dictionary<GameObject, Color>();
     public List<GameObject> luuCell;
     public int turn = 1;
+
     void Start()
     {
         ColorSet();
@@ -92,14 +98,6 @@ public class Test : MonoBehaviour
             ban.GetComponent<Renderer>().material.color = Color.white;
         }
 
-       /* for (int i = 0; i < floorsColor.Count; i++)
-        {
-
-          //  Debug.Log("name " + floorsColor[0].GetComponent<Renderer>().material.color);
-            Debug.Log(colors[ischoice].ToString());
-
-            
-        }*/
 
         foreach (KeyValuePair<GameObject,Color> item in floorsColorDic)
         {
@@ -108,10 +106,11 @@ public class Test : MonoBehaviour
             if (floorsColor.Contains(obj))
             {
                 Color color = mat;
-                Debug.Log(color.ToString());
+               // Debug.Log(color.ToString());
                 if (color == colors[ischoice]) {
                     obj.GetComponent<Renderer>().material.color = color;
                     obj.SetActive(true);
+
                 }else
                 {
                     obj.SetActive(false);
@@ -128,14 +127,29 @@ public class Test : MonoBehaviour
         {
             obj2.SetActive(true);
             obj2.GetComponent<Renderer>().material.color = Color.white;
+           
         }
-        DOVirtual.DelayedCall(3f, () =>
+        turn++;
+        if (turn <= 3)
         {
-          
-            StartCoroutine(BlinkCells());
-        });
+            DOVirtual.DelayedCall(3f, () =>
+            {
+
+                StartCoroutine(BlinkCells());
+            });
+        }
+        else
+        {
+            Debug.Log(" you win ");
+            
+            
+            uIGameEnd.ShowPanel(true);
+        }
+    
 
     }
+
+
     bool CompareColors(GameObject obj, Color targetColor)
     {
         // L?y Renderer c?a GameObject
@@ -148,7 +162,7 @@ public class Test : MonoBehaviour
             // So sánh màu c?a v?t li?u v?i màu c?n so sánh
             if (objectColor.Equals(targetColor))
             {
-                Debug.Log("cooooooiô");
+               
                 return true;
             }
         }
@@ -156,6 +170,13 @@ public class Test : MonoBehaviour
     }
     
 
-    
-    
+    public void Replay()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MoveToLive");
+    }
+    public void Menu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 }
