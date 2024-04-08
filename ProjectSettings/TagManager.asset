@@ -19,6 +19,7 @@ TagManager:
   - 8
   - floor
   - Bots
+  - Wall
   layers:
   - Default
   - TransparentFX

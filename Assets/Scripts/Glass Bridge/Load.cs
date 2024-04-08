@@ -7,8 +7,13 @@ public class Load : MonoBehaviour
 {
   
 
-    public void Play()
+    public void GlassBridge()
     {
         SceneManager.LoadScene("SampleScene");
+    }
+
+    public void MoveToLive()
+    {
+        SceneManager.LoadScene("MoveToLive");
     }
 }

@@ -28,7 +28,7 @@ public class UIGameEnd : MonoBehaviour
         if (isChoice == true)
         {
             buttonReward.GetComponent<Button>().interactable = false;
-            Debug.LogError("qqqq");
+          
 
             tweenChoiceReward.Kill();
             float value = choiceReward.value;
@@ -91,7 +91,7 @@ public class UIGameEnd : MonoBehaviour
 
     public void ShowPanel(bool isWin)
     {
-        Debug.LogError("wwww");
+        Debug.LogError("win");
         panelEndGame.SetActive(true);
         var rectChildSeconds = panelEndGame.GetComponent<RectTransform>().GetChild(2).gameObject;
         this.isWin = isWin;

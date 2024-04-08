@@ -2,39 +2,131 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
+
 
 public class BotAutoMovement : MonoBehaviour
 {
-    float moveSpeed = 40;
-    public float moveDuration = 1f; // Thời gian di chuyển (giây)
-    public float restDuration = 2f; // Thời gian nghỉ (giây)
-    public float speeder;
+    public float moveSpeed = 5f; // Tốc độ di chuyển
+    public List<Transform> targets;
+    public float raycastDistance = 2f; // Khoảng cách của raycast
+    public Transform tfbot;
+    public float slowFactor = 0.1f; // Hệ số chậm hơn
+    private Rigidbody rb;
+    private Vector3 moveDirection;
+    private bool isMoving = false;
+    private bool isStopped = false;
+    private float moveTimer = 0f;
+    int diemdich;
 
-    private Vector3 randomDirection; // Hướng di chuyển ngẫu nhiên
-    private Rigidbody rb; // Rigidbody của nhân vật
 
     void Start()
     {
-        // Lấy Rigidbody của nhân vật
         rb = GetComponent<Rigidbody>();
-        GenerateRandomDirection();
-        // Bắt đầu coroutine để di chuyển bot
+        //moveDirection = new Vector3(Random.Range(-10, 10), 0f, Random.Range(-10, 10)).normalized;
+        moveDirection = targets[Random.Range(0, targets.Count)].position.normalized;
+        diemdich =  Random.Range(0, targets.Count);
+             
+
     }
 
-    private void Update()
+    void FixedUpdate()
     {
-        speeder = rb.velocity.magnitude;
-        if (speeder < 2 )
-        {
-            rb.AddForce(randomDirection * moveSpeed, ForceMode.Force);
-        }
 
         
+        if (!isStopped)
+        {
+           
+            if (isMoving)
+            {
+                if (moveTimer >= 12)
+                {
+                    
+                    moveDirection = targets[diemdich].position - transform.position;
+                    moveDirection.y = 0;
+                    moveDirection = moveDirection.normalized;
+               
+                }
+                moveTimer += Time.deltaTime;
+                rb.MovePosition(transform.position + moveDirection * moveSpeed * slowFactor * Time.deltaTime);
+               
+
+                if (moveTimer >= 15 || (targets[diemdich].position - transform.position).magnitude < 1) { 
+                    isMoving = false;
+                    Debug.Log("páu");
+                    StartCoroutine(StopForBot());
+                }
+            }
+            else
+            {
+                
+                isMoving = true;
+            }
+
+        }
+
+
+    }
+    IEnumerator StopForBot()
+    {
+        isStopped = true;
+        yield return new WaitForSeconds(3f);
+        moveTimer = 0f;
+        isStopped = false;
+        moveDirection = targets[Random.Range(0, targets.Count)].position.normalized;
+        diemdich = Random.Range(0, targets.Count);
+        OnDrawGizmos();
+    }
+    IEnumerator StopForTrick()
+    {
+        isStopped = true;
+        yield return new WaitForSeconds(1f);
+       
+        isStopped = false;
+        moveDirection = new Vector3(Random.Range(-10, 10), 0f, Random.Range(-10, 10)).normalized;
+        diemdich = Random.Range(0, targets.Count);
+
+    }
+    private void OnDrawGizmos()
+    {
+        Debug.DrawLine(transform.position, targets[diemdich].position, Color.red);
     }
 
-    void GenerateRandomDirection()
+    private void OnCollisionEnter(Collision other)
     {
-        // Tạo một hướng di chuyển ngẫu nhiên
-        randomDirection = new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f)).normalized;
+        if (other.gameObject.CompareTag("Wall"))
+        {
+
+           // moveDirection = targets[Random.Range(0, targets.Count)].position.normalized;
+            moveDirection = new Vector3(Random.Range(-10, 10), 0f, Random.Range(-10, 10)).normalized;
+        }
+        if ( other.gameObject.CompareTag("Player"))
+        {
+            StartCoroutine(StopForTrick());
+           
+        }
+        if (other.gameObject.CompareTag("Bots"))
+        {
+            moveDirection = new Vector3(Random.Range(-10, 10), 0f, Random.Range(-10, 10)).normalized;
+        }
+
     }
+    private void OnCollisionStay(Collision other)
+    {
+        if (other.gameObject.CompareTag("Wall"))
+        {
+           // moveDirection = targets[Random.Range(0, targets.Count)].position.normalized;
+            moveDirection = new Vector3(Random.Range(-10, 10), 0f, Random.Range(-10, 10)).normalized;
+        }
+        if (other.gameObject.CompareTag("Player"))
+        {
+            StartCoroutine (StopForTrick());
+        }
+        if (other.gameObject.CompareTag("Bots"))
+        {
+            moveDirection = new Vector3(Random.Range(-10, 10), 0f, Random.Range(-10, 10)).normalized;
+        }
+    }
+  
 }

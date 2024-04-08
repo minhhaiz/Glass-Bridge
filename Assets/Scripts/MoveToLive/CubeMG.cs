@@ -5,7 +5,7 @@ using UnityEngine;
 public class CubeMG : MonoBehaviour
 {
     public List<GameObject> lisBots;
-    public GameObject player,Panellose;
+    public GameObject player,Panellose, Round;
 
      void OnTriggerEnter(Collider other)
     {
@@ -19,6 +19,7 @@ public class CubeMG : MonoBehaviour
         {
             Debug.Log("m thua r");
             Time.timeScale = 0f;
+            Round.SetActive(false);
             Panellose.SetActive(true);
         }
     }
