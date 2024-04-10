@@ -12,7 +12,7 @@ namespace minhai
         public GameObject player, panelLose, round;
         bool isDrag;
         Rigidbody rigidbody;
-        float moveSpeed = 5;
+        float moveSpeed = 4f;
         Vector3 moveDirection = Vector3.zero;
         public FloatingJoystick fj;
 
@@ -35,16 +35,7 @@ namespace minhai
             {
                 isDrag = false;
             }
-            if (isDrag == true)
-            {
-                moveDirection.x = fj.Direction.x;
-                moveDirection.z = fj.Direction.y;
-
-                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-                player.transform.rotation = targetRotation;
-                rigidbody.MovePosition(player.transform.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
-            }
-
+           
 
             if (player.transform.position.y < -3)
             {
@@ -54,6 +45,18 @@ namespace minhai
 
         }
 
+        private void FixedUpdate()
+        {
+            if (isDrag == true)
+            {
+                moveDirection.x = fj.Direction.x;
+                moveDirection.z = fj.Direction.y;
+
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+                player.transform.rotation = targetRotation;
+                rigidbody.MovePosition(player.transform.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
+            }
+        }
     }
 }
 

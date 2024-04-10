@@ -38,7 +38,7 @@ namespace minhai
             Application.targetFrameRate = 120;
 
             luuCell.AddRange(floors);
-            Debug.Log(round.Count);
+           
             StartCoroutine(BlinkCells());
         }
 
@@ -48,7 +48,7 @@ namespace minhai
         {
             round[turn].color = Color.red;
 
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             List<GameObject> threeW = new List<GameObject>();
 
             for (int i = 0; i < 3; i++)
@@ -114,13 +114,9 @@ namespace minhai
                 if (floorsColor.Contains(obj))
                 {
                     Material color = mat;
-                    Debug.Log(obj + "obj ");
-                    Debug.Log(mat + " ");
-                    Debug.Log(color.ToString());
-                    Debug.Log(colorMark[ischoice] + "choice");
+                  
                     if (Compare(color, colorMark[ischoice]))
-                    {
-                        Debug.Log(colorMark[ischoice] + "alo alo");
+                    {                       
                         obj.GetComponent<Renderer>().material = color;
                         obj.SetActive(true);
 

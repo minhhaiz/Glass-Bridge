@@ -17,7 +17,7 @@ namespace MinHai
        
         public float timespin = 0.5f;
         
-        private bool isSpinning=  false;
+ 
 
 
         private void Awake()
@@ -72,17 +72,17 @@ namespace MinHai
                 gameManager = GameObject.FindObjectOfType<GameManager>();
             }
             gameManager.StartGame();
-            btnCall.SetActive(true);
             Time.timeScale = 1f;
         }
 
       
         public void DetermineSelectedItem(int angle)
         {
-            int selectedItem = angle; 
-         
-            if(selectedItem == 0)
-            {
+            int selectedItem = angle;
+
+            if (selectedItem == 0)
+            {            btnCall.SetActive(false);
+
                 PlayGame();
                 Debug.Log("bong bay");
                DOVirtual.DelayedCall(3f, ItemBalloon);
@@ -123,7 +123,7 @@ namespace MinHai
 
             tfrmPlayer.DOPath(path, 3f, PathType.CatmullRom).SetEase(Ease.Linear);
             Time.timeScale = 1f;
-            DOTween.PlayAll();
+
            
 
         }
