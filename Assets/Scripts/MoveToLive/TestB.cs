@@ -26,10 +26,11 @@ public class TestB : MonoBehaviour
     void FixedUpdate()
     {
         // Kiểm tra nếu bot không di chuyển
-        if (!isMoving)
+        if (!isMoving && transform.position.y >= 0)
         {
             MoveToRandomPosition();
         }
+        
     }
 
     void MoveToRandomPosition()
@@ -43,9 +44,9 @@ public class TestB : MonoBehaviour
        
         transform.rotation = Quaternion.LookRotation(direction);
 
-        rb.MovePosition( rb.transform.position +  direction  * 0.6f * Time.fixedDeltaTime);
+        rb.MovePosition( rb.transform.position +  direction  * 0.5f * Time.fixedDeltaTime);
         moveTimer += Time.deltaTime;
-        
+        Debug.Log(Vector3.Distance(transform.position, targetPositions[randomIndex].position));
         if (Vector3.Distance(transform.position, targetPositions[randomIndex].position) <= 2f)
         {
         
@@ -54,7 +55,9 @@ public class TestB : MonoBehaviour
 
         if (moveTimer >= 11)
         {
+
             randomIndex = diem;
+            
         }
         if(moveTimer > 14f) {
 
@@ -67,9 +70,10 @@ public class TestB : MonoBehaviour
     {
 
         isMoving = true;
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
         moveTimer = 0f;
         isMoving = false;
+        diem = Random.Range(0, targetPositions.Count);
     }
 
     private void OnCollisionEnter(Collision other)
@@ -77,6 +81,10 @@ public class TestB : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("lodđ");
+            MoveToRandomPosition();
+        }
+        if (other.gameObject.CompareTag("Bots"))
+        {
             MoveToRandomPosition();
         }
     }
